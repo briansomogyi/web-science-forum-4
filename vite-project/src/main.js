@@ -20,3 +20,11 @@ axios({
     .then((response) => {
         console.log(response);
     });
+
+const ws = new WebSocket('ws://localhost:8080')
+ws.onopen = (ws) => {
+    console.log(`Connected to server: ${ws}`)
+}
+ws.onmessage = (data) => {
+    console.log(`Message from server: ${data}`)
+}
