@@ -1,24 +1,12 @@
 import { Router } from 'express';
 const router = Router();
-let users = [];
-router.post('/new-user', (req, res) => {
-    const name = req.body.name;
-    const email = req.body.email;
-    users.push({
-        name,
-        email
-    });
-    res.send('saved');
-})
-router.put('/edit-user', (req, res) => {
-    const name = req.body.name;
-    const email = req.body.email;
-    const id = users.findIndex(user => user.name == name);
-    if (id > -1) {
-        users[id].email = email
-        res.send('edited');
+router.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    if (username === 'admin' && password === 'admin') {
+        res.send('Login successful');
     } else {
-        res.send('not found');
+        res.send('Login failed');
     }
 })
 export default router;
