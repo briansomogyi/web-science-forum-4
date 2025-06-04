@@ -1,0 +1,7 @@
+###
+PUT http://localhost:3000/access/new-user
+Content-Type: application/json
+{
+    "name": "Daniel",
+    "email": "daniel@emanuel.ro"
+}

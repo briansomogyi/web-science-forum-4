@@ -1,18 +1,25 @@
-import http from "http";
-const hostname = '0.0.0.0';
-const port = 3000;
-const server = http.createServer((req, res) => {
-    const headers = {
-        "Access-Control-Allow-Origin": "*",
-        // "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
-        // "Access-Control-Max-Age": 2592000, // 30 days
-        // /** add other headers as per requirement */
-    };
-    // res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.writeHead(200, headers)
-    res.end('{"name": "Brian"}');
+import express from "express";
+import accessRouter from "./routes/access.js"
+import homeRouter from "./routes/home.js"
+const app = express();
+const port = 3000
+// Add headers before the routes are defined
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    // Pass to next layer of middleware
+    next();
 });
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.use(express.json());
+app.use('/access', accessRouter);
+app.use('/home', homeRouter);
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
