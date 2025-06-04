@@ -1,6 +1,6 @@
 import { useWsStore } from './stores/wsStore'
 export const ws = new
-    WebSocket('ws://backend.emanuel.local:8080')
+    WebSocket('ws://localhost:8080')
 ws.onopen = () => {
     console.log(`Connected to server`)
 }
