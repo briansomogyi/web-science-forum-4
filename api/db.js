@@ -19,13 +19,27 @@ export const sequelize = new Sequelize(db.NAME, db.USERNAME, db.PASSWORD,
 export const User = sequelize.define(
     "User",
     {
-        name: {
+        firstName: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true,
             },
         },
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        // sibbling: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        //     validate: {
+        //         notEmpty: true,
+        //     },
+        // },
     },
     {
         sequelize,
@@ -53,5 +67,27 @@ export const Post = sequelize.define(
         paranoid: true,
     }
 );
+
 User.hasMany(Post);
 Post.belongsTo(User);
+
+const t = await sequelize.transaction();
+try {
+    const user = await User.create(
+        {
+            firstName: 'Bart',
+            lastName: 'Simpson',
+        },
+        { transaction: t },
+    );
+    await user.addSibling(
+        {
+            firstName: 'Lisa',
+            lastName: 'Simpson',
+        },
+        { transaction: t },
+    );
+    await t.commit();
+} catch (error) {
+    await t.rollback();
+}
