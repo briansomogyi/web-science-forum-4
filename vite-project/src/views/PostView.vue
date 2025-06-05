@@ -1,20 +1,15 @@
 <template>
     <div>
-        <h2>Posts</h2>
-        <div v-for="post in posts" :key="post.id">
+        <h2>Live Post Updates</h2>
+        <button @click="addPost({ name: 'AI Ethics Discussion' })">Add Post</button>
+        <div v-for="post in posts" :key="post.name">
             <p>{{ post.name }}</p>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import apiClient from "../api";
+import { usePostStore } from "../stores/postStore";
 
-const posts = ref([]);
-
-onMounted(async () => {
-    const response = await apiClient.get("/posts");
-    posts.value = response.data;
-});
+const { posts, addPost } = usePostStore();
 </script>
