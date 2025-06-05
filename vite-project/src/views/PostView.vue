@@ -1,8 +1,8 @@
 <template>
     <div>
         <h2>Live Post Updates</h2>
-        <button @click="addPost({ name: 'AI Ethics Discussion' })">Add Post</button>
-        <div v-for="post in posts" :key="post.name">
+        <button @click="addPost({ name: 'New AI Discussion' })">Add Post</button>
+        <div v-for="post in posts" :key="post.id">
             <p>{{ post.name }}</p>
         </div>
     </div>
