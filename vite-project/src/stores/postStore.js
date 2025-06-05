@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const usePostStore = defineStore("postStore", () => {
-    const ws = new WebSocket("ws://localhost:3001");
+    const ws = new WebSocket("ws://localhost:3000");
     const posts = ref([]);
 
     ws.onmessage = (event) => {
@@ -12,7 +12,7 @@ export const usePostStore = defineStore("postStore", () => {
         }
     };
 
-    const addPost = (post) => {
+    const addPost = async (post) => {
         ws.send(JSON.stringify({ type: "new_post", data: post }));
     };
 
