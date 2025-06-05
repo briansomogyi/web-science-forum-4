@@ -6,7 +6,7 @@ const db = {
     options: {
         dialect: "mysql",
         timezone: "+00:00",
-        host: "127.0.0.1",
+        host: "mysql.web-science-forum",
         port: 3306,
         logging: function (str) {
             console.log(str);
@@ -151,13 +151,13 @@ try {
         },
         { transaction: t },
     );
-    await user.addSibling(
-        {
-            firstName: 'Lisa',
-            lastName: 'Simpson',
-        },
-        { transaction: t },
-    );
+    // await user.addSibling(
+    //     {
+    //         firstName: 'Lisa',
+    //         lastName: 'Simpson',
+    //     },
+    //     { transaction: t },
+    // );
     const community = await Community.create(
         { name: "TechTalk", description: "Discussion on latest tech trends" },
         { transaction: t }

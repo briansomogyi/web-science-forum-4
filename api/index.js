@@ -23,7 +23,8 @@ app.put("/users/:id", async (req, res) => {
     const user = await User.findByPk(req.params.id);
     if (user) {
         await user.update(req.body);
-        res.json(user);
+        const updatedUser = await User.findByPk(req.params.id); // Re-fetch
+        res.json(updatedUser);
     } else {
         res.status(404).json({ error: "User not found" });
     }
